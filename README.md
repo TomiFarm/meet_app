@@ -2,6 +2,8 @@ Meet app
 
 Meet app shows upcoming events in a city
 
+Meet app uses serverless functions to get event data from Google Calendar API
+
 Features:
 - Filter events by city
 - Show and Hide event's details
@@ -27,4 +29,3 @@ Scenarios:
 - Given a user has opened the app previously, when a user opens the without internet connection, then a cached data is shown
 - Given a user has opened the app without internet connection, when a user changes settings (city, time range), then a error is shown indicating the data is not available without internet connection
 - Given the app has loaded, when a user selects to visualize, then a chart showing upcoming events is shown
-
