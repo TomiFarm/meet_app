@@ -5,10 +5,10 @@ class NumberOfEvents extends Component {
         query: 32
     };
 
-    handleInputChanged = (event) => {
-        const value = event.target.value;
+    handleInputChanged = (numberOfEvents) => {
+        const value = numberOfEvents.target.value;
         this.setState({query: value});
-    }
+    };
 
     render() {
         

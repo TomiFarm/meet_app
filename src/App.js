@@ -6,6 +6,8 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 
+import './nprogress.css'
+
 
 class App extends Component {
 
@@ -21,11 +23,11 @@ class App extends Component {
         this.setState({ events, locations: extractLocations(events) });
       }
     });
-  }
+  };
 
   componentWillUnmount(){
     this.mounted = false;
-  }
+  };
 
   updateEvents = (location) => {
     getEvents().then((events) => {
@@ -36,7 +38,7 @@ class App extends Component {
         events: locationEvents
       });
     });
-  }
+  };
 
   render() {
 
@@ -47,7 +49,10 @@ class App extends Component {
         <EventList events={this.state.events} />
       </div>
     );
-  }
+  };
+
+  
+  
 
 }
 
