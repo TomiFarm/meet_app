@@ -57,7 +57,7 @@ export const getAccessToken = async () => {
             const { authUrl } = results.data;
             return (window.location.href = authUrl );
         }
-        return code && getAccessToken(code);
+        return code && getToken(code);
     }
     return accessToken;
 }
@@ -74,7 +74,7 @@ export const getEvents = async () => {
 
     if(token) {
         removeQuery();
-        const url = 'https://0v0traqf9e.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' + token;
+        const url = 'https://0v0traqf9e.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' + '/' + token;
         const result = await axios.get(url);
         if (result.data) {
             var locations = extractLocations(result.data.events);
