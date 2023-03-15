@@ -2,15 +2,7 @@ import { mockData } from './mock-data';
 import axios from 'axios';
 import NProgress from 'nprogress';
 
-const checkToken = async (accessToken) => {
-    const result = await fetch(
-        `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-    )
-        .then((res) => res.json())
-        .catch((error) => error.json());
 
-    return result;
-};
 
 const removeQuery = () => {
     if(window.history.pushState && window.location.pathname) {
@@ -34,7 +26,7 @@ const getToken = async (code) => {
     .then((res) => {
         return res.json();
     })
-    .catch((err) => {return err});
+    .catch((error) => {return error});
     
     access_token && localStorage.setItem('access_token', access_token);
 
@@ -55,12 +47,22 @@ export const getAccessToken = async () => {
                 'https://0v0traqf9e.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url'
             );
             const { authUrl } = results.data;
-            return (window.location.href = authUrl );
+            return (window.location.href = authUrl);
         }
         return code && getToken(code);
     }
     return accessToken;
 }
+
+const checkToken = async (accessToken) => {
+    const result = await fetch(
+        `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+    )
+        .then((res) => res.json())
+        .catch((error) => error.json());
+
+    return result;
+};
 
 export const getEvents = async () => {
     NProgress.start();
