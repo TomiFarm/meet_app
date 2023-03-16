@@ -13,13 +13,16 @@ class App extends Component {
 
   state = {
     events: [],
-    locations: []
+    locations: [],
+    eventCount: 32,
+    selectedLocation: 'all'
   };
 
   componentDidMount() {
     this.mounted = true;
     getEvents().then((events) => {
       if (this.mounted) {
+        events = events.slice(0, this.state.eventCount);
         this.setState({ events, locations: extractLocations(events) });
       }
     });
@@ -29,15 +32,31 @@ class App extends Component {
     this.mounted = false;
   };
 
-  updateEvents = (location) => {
-    getEvents().then((events) => {
-      const locationEvents = (location === 'all') ? 
-        events :
-        events.filter((event) => event.location === location);
-      this.setState({
-        events: locationEvents
+  updateEvents = (location, selectedEventCount) => {
+    if (location){
+      getEvents().then((events) => {
+        const locationEvents = (location === 'all') ? 
+          events :
+          events.filter((event) => event.location === location);
+        const eventsToShow = locationEvents.slice(0, this.state.eventCount);
+        
+        this.setState({
+          events: eventsToShow,
+          selectedLocation: location
+        });
       });
-    });
+    } else {
+      getEvents().then((events) => {
+        const locationEvents = (this.state.selectedLocation === 'all') ? 
+          events :
+          events.filter((event) => event.location === this.state.selectedLocation);
+        const eventsToShow = locationEvents.slice(0, selectedEventCount);
+        this.setState({
+          events: eventsToShow,
+          eventCount: selectedEventCount
+        });
+      });
+    }
   };
 
   render() {
@@ -45,7 +64,7 @@ class App extends Component {
     return (
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents />
+        <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
       </div>
     );
