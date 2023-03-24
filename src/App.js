@@ -5,6 +5,7 @@ import { extractLocations, getEvents } from './api';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
+import { WarningAlert } from './Alert';
 
 import './nprogress.css';
 
@@ -60,9 +61,15 @@ class App extends Component {
   };
 
   render() {
+    const online = navigator.onLine;
+    let warningText = 'Testi';
+    if (!online){
+      warningText = 'OFFLINE';
+    }
 
     return (
       <div className="App">
+        <WarningAlert text={warningText} />
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
