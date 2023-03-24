@@ -20,7 +20,6 @@ class App extends Component {
 
   componentDidMount() {
     this.mounted = true;
-
     getEvents().then((events) => {
       if (this.mounted) {
         events = events.slice(0, this.state.eventCount);
