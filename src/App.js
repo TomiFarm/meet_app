@@ -65,7 +65,9 @@ class App extends Component {
     let warningText = 'Testi';
     if (!online){
       warningText = 'OFFLINE';
-    }
+    } else {
+      warningText = 'ONLINE';
+    };
 
     return (
       <div className="App">
@@ -76,10 +78,6 @@ class App extends Component {
       </div>
     );
   };
-
-  
-  
-
 }
 
 
