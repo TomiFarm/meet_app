@@ -10,15 +10,15 @@ class EventList extends Component {
     render() {
         const { events } = this.props;
 
-        if(!navigator.onLine){
-            this.setState({
-                offlineWarningText: 'You are offline. The events shown may not be up to date. Please connect to internet to make searches and to get up to date events.'
-            });
-        } else {
-            this.setState({
-                offlineWarningText: ''
-            });
-        }
+        // if(!navigator.onLine){
+        //     this.setState({
+        //         offlineWarningText: 'You are offline. The events shown may not be up to date. Please connect to internet to make searches and to get up to date events.'
+        //     });
+        // } else {
+        //     this.setState({
+        //         offlineWarningText: ''
+        //     });
+        // }
 
         return (
             <><WarningAlert text={this.state.offlineWarningText} />
