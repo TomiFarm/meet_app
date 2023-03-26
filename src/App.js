@@ -7,6 +7,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
+import EventGenre from './EventGenre';
 import { WarningAlert } from './Alert';
 
 import './nprogress.css';
@@ -85,8 +86,8 @@ class App extends Component {
     if (this.state.showWelcomeScreen === undefined) {
       return (
         <div classname="App" />
-      )
-    }
+      );
+    };
 
     const online = navigator.onLine;
     let warningText = 'Testi';
@@ -104,6 +105,7 @@ class App extends Component {
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
         <h4>Events in each city</h4>
+        <EventGenre events={this.state.events} />
         <ResponsiveContainer height={400} >
           <ScatterChart
             margin={{
@@ -118,7 +120,7 @@ class App extends Component {
           </ScatterChart>
         </ResponsiveContainer>
         <EventList events={this.state.events} />
-        {/* <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} getAccessToken={ () => {getAccessToken()} } /> */}
+        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} getAccessToken={ () => {getAccessToken()} } />
       </div>
     );
   };
