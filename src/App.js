@@ -1,8 +1,7 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
 
 import EventList from './EventList';
 import CitySearch from './CitySearch';
@@ -14,7 +13,6 @@ import './nprogress.css';
 
 import WelcomeScreen from './WelcomeScreen';
 
-
 class App extends Component {
 
   state = {
@@ -22,7 +20,8 @@ class App extends Component {
     locations: [],
     eventCount: 32,
     selectedLocation: 'all',
-    showWelcomeScreen: undefined
+    showWelcomeScreen: undefined,
+    warningText: ''
   };
 
   async componentDidMount() {
@@ -39,6 +38,18 @@ class App extends Component {
         }
       });
     }
+
+    const handleOnlineStatus = () => {
+      if(!navigator.onLine){
+        this.setState({ warningText: 'You are offline. The events you are seeing may not be up to date. Please connect to internet to get up to date events.'});
+      } else {
+        this.setState({ warningText: ''});
+      }
+    };
+
+    handleOnlineStatus();
+    window.addEventListener('offline', handleOnlineStatus);
+    window.addEventListener('online', handleOnlineStatus);
   };
 
   componentWillUnmount(){
@@ -82,6 +93,8 @@ class App extends Component {
     }
   };
 
+
+
   render() {
     if (this.state.showWelcomeScreen === undefined) {
       return (
@@ -89,17 +102,17 @@ class App extends Component {
       );
     };
 
-    const online = navigator.onLine;
-    let warningText = 'Testi';
-    if (!online){
-      warningText = 'You are offline. The events you are seeing may not be up to date. Please connect to internet to get up to date events.';
-    } else {
-      warningText = '';
-    };
+    // const online = navigator.onLine;
+    // let warningText = '';
+    // if (!online){
+    //   warningText = 'You are offline. The events you are seeing may not be up to date. Please connect to internet to get up to date events.';
+    // } else {
+    //   warningText = '';
+    // };
 
     return (
       <div className="App">
-        <WarningAlert text={warningText} />
+        <WarningAlert text={this.state.warningText} />
         <h1>Meet App</h1>
         <h4>Choose a city</h4>
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
